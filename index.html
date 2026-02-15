@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for my baby · surprise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Caveat', cursive, system-ui, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #fbe9f0 0%, #fcd9e5 100%);
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ---------- background balloons + hearts (exactly as described) ---------- */
+        .floating-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;      /* so buttons are clickable */
+        }
+
+        .balloon, .heart-bg {
+            position: absolute;
+            opacity: 0.5;
+            animation: float 12s infinite ease-in-out;
+        }
+
+        .balloon {
+            width: 70px;
+            height: 90px;
+            background: #ff9eb5;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.05), 0 8px 15px rgba(255, 80, 120, 0.2);
+            transform-origin: bottom center;
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 35px;
+            background: #a05f6b;
+            opacity: 0.7;
+        }
+
+        .balloon:nth-child(1) { left: 5%; top: 15%; background: #ffb3c6; width: 65px; height: 85px; animation-delay: 0s; }
+        .balloon:nth-child(2) { left: 85%; top: 70%; background: #fb8da0; width: 90px; height: 115px; animation-delay: 1.5s; }
+        .balloon:nth-child(3) { left: 15%; top: 75%; background: #ffc1cc; width: 75px; height: 100px; animation-delay: 2.2s; }
+        .balloon:nth-child(4) { left: 70%; top: 10%; background: #ffa5b9; width: 80px; height: 105px; animation-delay: 0.8s; }
+        .balloon:nth-child(5) { left: 40%; top: 80%; background: #fec5d2; width: 60px; height: 80px; animation-delay: 3s; }
+        .balloon:nth-child(6) { left: 88%; top: 35%; background: #ffb3c6; width: 70px; height: 95px; animation-delay: 2.7s; }
+
+        .heart-bg {
+            font-size: 2.4rem;
+            user-select: none;
+            animation: heartFloat 8s infinite alternate;
+            filter: drop-shadow(0 5px 8px rgba(255, 100, 150, 0.3));
+        }
+
+        .heart-bg:nth-child(7) { left: 12%; top: 30%; animation-duration: 9s; opacity: 0.5; }
+        .heart-bg:nth-child(8) { left: 52%; top: 18%; font-size: 3rem; animation-duration: 11s; opacity: 0.45; }
+        .heart-bg:nth-child(9) { left: 74%; top: 55%; font-size: 2.8rem; animation-duration: 7s; opacity: 0.55; }
+        .heart-bg:nth-child(10) { left: 33%; top: 92%; font-size: 3.2rem; animation-duration: 13s; opacity: 0.5; }
+        .heart-bg:nth-child(11) { left: 92%; top: 82%; font-size: 2.2rem; animation-duration: 10s; opacity: 0.6; }
+        .heart-bg:nth-child(12) { left: 45%; top: 45%; font-size: 2rem; animation-duration: 8s; opacity: 0.4; }
+        .heart-bg:nth-child(13) { left: 5%; top: 55%; font-size: 3.5rem; animation-duration: 14s; opacity: 0.5; }
+        .heart-bg:nth-child(14) { left: 60%; top: 70%; font-size: 2.5rem; animation-duration: 12s; opacity: 0.5; }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes heartFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(12px, -18px) scale(1.08); }
+        }
+
+        /* main card layer — exactly like the "editable on canva" instant digital card style */
+        .card-container {
+            position: relative;
+            z-index: 20;
+            width: 820px;
+            max-width: 90vw;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 48px 48px 48px 12px;
+            box-shadow: 0 30px 50px rgba(190, 80, 120, 0.25),
+                        0 10px 25px rgba(0, 0, 0, 0.1),
+                        inset 0 2px 6px rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(255, 220, 230, 0.9);
+            padding: 3rem 2.5rem;
+            text-align: center;
+        }
+
+        /* text styles inspired by the "I love you, John" letter */
+        .greeting {
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: #a53f5e;
+            letter-spacing: -0.5px;
+            text-shadow: 2px 2px 0 #ffe2eb;
+            margin-bottom: 0.3rem;
+            font-family: 'Caveat', cursive;
+        }
+
+        .baby-line {
+            font-size: 2.2rem;
+            color: #752c46;
+            margin-bottom: 1rem;
+            font-weight: 400;
+            background: #ffdae5;
+            display: inline-block;
+            padding: 0.2rem 2rem;
+            border-radius: 60px;
+            box-shadow: inset 0 -2px 0 #ffb0c3;
+        }
+
+        .main-message {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #9f3e5c;
+            margin: 1.5rem 0 0.5rem;
+            line-height: 1.3;
+        }
+
+        .main-message span {
+            background: #fff0f3;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            display: inline-block;
+            box-shadow: 0 4px 0 #ffb7c5;
+        }
+
+        /* wavy question box */
+        .question-box {
+            margin: 2.5rem 0 2rem;
+            filter: drop-shadow(0 8px 12px #fec5d2);
+        }
+
+        .wavy {
+            font-size: 2.2rem;
+            font-weight: 500;
+            background: #ffffffd6;
+            padding: 0.9rem 2.2rem;
+            border-radius: 60px 60px 60px 12px;
+            display: inline-block;
+            border: 3px solid white;
+            box-shadow: 0 6px 0 #ff90ae, 0 12px 20px #ffc0cb6e;
+            transform: rotate(-0.5deg);
+            backdrop-filter: blur(2px);
+            color: #631f36;
+            font-family: 'Caveat', cursive;
+            position: relative;
+        }
+
+        .wavy::before {
+            content: '';
+            position: absolute;
+            top: 8px; left: -12px; width: 40px; height: 30px;
+            background: #ffe2ed;
+            border-radius: 40% 60% 30% 70%;
+            z-index: -1;
+            opacity: 0.6;
+            transform: rotate(10deg);
+        }
+
+        .wavy::after {
+            content: '✨';
+            position: absolute;
+            bottom: -15px; right: -8px;
+            font-size: 2rem;
+            transform: rotate(15deg);
+            filter: drop-shadow(0 2px 4px gold);
+        }
+
+        /* button container */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            align-items: center;
+            margin-top: 2rem;
+            position: relative;
+            flex-wrap: wrap;
+            min-height: 85px;
+        }
+
+        .yes-btn, .no-btn {
+            border: none;
+            font-size: 2rem;
+            font-weight: 600;
+            padding: 0.9rem 2.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            box-shadow: 0 8px 0 #b34b67, 0 12px 25px #f9acbe;
+            letter-spacing: 1px;
+            background: white;
+            border: 2px solid #ffeef2;
+            color: #a53f5e;
+            transform: translateY(0);
+            font-family: 'Caveat', cursive;
+            position: relative;
+            z-index: 25;
+        }
+
+        .yes-btn {
+            background: #ffe2ed;
+            box-shadow: 0 8px 0 #d46b86, 0 12px 25px #f9acbe;
+        }
+
+        .no-btn {
+            background: #fbd0d0;
+            color: #75293e;
+            box-shadow: 0 8px 0 #b14b64, 0 12px 25px #f9acbe;
+            position: relative;  /* for js movement */
+            transition: left 0.08s, top 0.08s, right 0.08s, bottom 0.08s; /* snappy run */
+            cursor: default;     /* we change later but pointer-events: auto */
+        }
+
+        .no-btn:hover {
+            /* no hover effect — actually we don't want any, because it runs */
+            background: #fbd0d0; 
+        }
+
+        .yes-btn:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #b34b67, 0 8px 18px #f9acbe;
+        }
+
+        .footnote {
+            margin-top: 2.8rem;
+            font-size: 1.2rem;
+            color: #ad6882;
+            background: rgba(255,255,240,0.5);
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            display: inline-block;
+            border: 1px dashed #ffa5b9;
+            font-style: italic;
+        }
+
+        .footnote i {
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+        }
+
+        /* small canva/letter style */
+        .ribbon {
+            font-size: 1.2rem;
+            color: #c95c7a;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: rgba(255, 227, 237, 0.7);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 1.2rem;
+            border: 1px solid white;
+        }
+
+        /* ensure no button stays above everything */
+        .button-group * {
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- background balloons + hearts (exactly as described) -->
+    <div class="floating-bg">
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <!-- hearts using html entities with styling -->
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <!-- extra hearts -->
+        <div class="heart-bg" style="left: 18%; top: 48%;">❤️</div>
+        <div class="heart-bg" style="left: 78%; top: 88%;">❤️</div>
+    </div>
+
+    <!-- main interactive card -->
+    <div class="card-container">
+        <div class="baby-line">💕 for my baby 💕</div>
+        <div class="main-message">
+            <span>hello baby i have a surprise for you</span>
+        </div>
+
+        <!-- wavy question box -->
+        <div class="question-box">
+            <div class="wavy">❀ are you ready? ❀</div>
+        </div>
+
+        <!-- yes / no buttons (NO button runs away) -->
+        <div class="button-group" id="buttonGroup">
+            <button class="yes-btn" id="yesBtn">YES 💖</button>
+            <button class="no-btn" id="noBtn">no 💔</button>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const noBtn = document.getElementById('noBtn');
+            const container = document.querySelector('.card-container'); // we use container for relative boundaries, but button-group is fine
+            const btnGroup = document.getElementById('buttonGroup');
+
+            // Ensure no button moves relative to viewport but stays inside button group area loosely
+            // We'll make it move anywhere inside the group to keep it visible but always escape cursor.
+
+            let counter = 0;
+
+            function getRandomOffset(currentX, currentY, mouseX, mouseY) {
+                // vector away from mouse
+                let deltaX = currentX - mouseX;
+                let deltaY = currentY - mouseY;
+
+                // if too close, push away strongly
+                const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                const minDistance = 120; // if mouse within 120px, flee
+                if (distance < minDistance) {
+                    // angle from mouse to button
+                    let angle = Math.atan2(currentY - mouseY, currentX - mouseX);
+                    // move in that direction + random scatter
+                    let force = (minDistance - distance) + 40;
+                    let moveX = Math.cos(angle) * force + (Math.random() * 40 - 20);
+                    let moveY = Math.sin(angle) * force + (Math.random() * 40 - 20);
+                    return { x: moveX, y: moveY };
+                }
+                // if mouse far, maybe occasional slight drift (but we just return null -> no move)
+                return null;
+            }
+
+            // store last position to keep within boundaries
+            let noBtnRect = noBtn.getBoundingClientRect();
+            let groupRect = btnGroup.getBoundingClientRect();
+
+            // initial relative position inside group (noBtn is position relative, we'll use left/top)
+            noBtn.style.position = 'relative';
+            noBtn.style.left = '0px';
+            noBtn.style.top = '0px';
+
+            // update internal position values
+            let offsetLeft = 0;
+            let offsetTop = 0;
+
+            function moveNoButton(e) {
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+
+                // get current button coordinates relative to viewport
+                const btnRect = noBtn.getBoundingClientRect();
+                const btnCenterX = btnRect.left + btnRect.width / 2;
+                const btnCenterY = btnRect.top + btnRect.height / 2;
+
+                // get container (btnGroup) rect for boundaries
+                const groupRect = btnGroup.getBoundingClientRect();
+
+                // compute flee displacement
+                const delta = getRandomOffset(btnCenterX, btnCenterY, mouseX, mouseY);
+                if (!delta) return; // no move needed
+
+                // new position (relative to current offset)
+                let newLeft = offsetLeft + delta.x;
+                let newTop = offsetTop + delta.y;
+
+                // boundaries: keep button inside btnGroup approximately (with padding)
+                const maxLeft = groupRect.width - btnRect.width - 5;  // 5px margin
+                const minLeft = 5;
+                const maxTop = groupRect.height - btnRect.height - 5;
+                const minTop = 5;
+
+                newLeft = Math.min(maxLeft, Math.max(minLeft, newLeft));
+                newTop = Math.min(maxTop, Math.max(minTop, newTop));
+
+                // apply
+                noBtn.style.left = newLeft + 'px';
+                noBtn.style.top = newTop + 'px';
+
+                // update stored offsets
+                offsetLeft = newLeft;
+                offsetTop = newTop;
+            }
+
+            // track mouse move globally on the whole page for fastest reaction
+            document.addEventListener('mousemove', function(e) {
+                moveNoButton(e);
+            });
+
+            // also move when mouse enters the button (to avoid initial capture)
+            noBtn.addEventListener('mouseenter', function(e) {
+                moveNoButton(e);
+            });
+
+            // Prevent clicking on no button (it's mean but fun)
+            noBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                alert("😜 nope! you have to press YES 💕");
+                // even move away more
+                const fakeMove = { clientX: e.clientX + 200, clientY: e.clientY + 150 };
+                moveNoButton(fakeMove);
+            });
+
+            // Yes button action
+            document.getElementById('yesBtn').addEventListener('click', function() {
+                alert("💖 yay! you said YES!!");
+                window.location.href = 'memories.html';
+                
+            });
+
+            // Ensure no button starts in a safe non-overlapping position (shift slightly)
+            window.addEventListener('load', function() {
+                // shift a bit right to not cover YES
+                noBtn.style.left = '60px';  // initial offset
+                offsetLeft = 60;
+                offsetTop = 0;
+
+                // extra: if mobile / touch, we might adapt but that's okay.
+            });
+
+            // Adjust on resize
+            window.addEventListener('resize', function() {
+                // reset to avoid going out of bounds, but keep relative
+                const groupRect = btnGroup.getBoundingClientRect();
+                const btnRect = noBtn.getBoundingClientRect();
+                let newLeft = Math.min(groupRect.width - btnRect.width - 10, offsetLeft);
+                let newTop = Math.min(groupRect.height - btnRect.height - 10, offsetTop);
+                newLeft = Math.max(5, newLeft);
+                newTop = Math.max(5, newTop);
+                noBtn.style.left = newLeft + 'px';
+                noBtn.style.top = newTop + 'px';
+                offsetLeft = newLeft;
+                offsetTop = newTop;
+            });
+
+        })();
+    </script>
+
+    <!-- include a nice handwritten font (Caveat) for that love letter feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+</body>
+</html>

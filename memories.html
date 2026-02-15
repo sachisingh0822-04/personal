@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>te adoro mi bebé</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #fef0f5;  /* soft pink background */
+            font-family: 'Caveat', cursive;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* floating hearts background - subtle */
+        .floating-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .heart-bg {
+            position: absolute;
+            font-size: 1.8rem;
+            opacity: 0.15;
+            animation: float 10s infinite ease-in-out;
+            color: #d46b86;
+        }
+
+        .heart-bg:nth-child(1) { left: 5%; top: 10%; animation-duration: 8s; }
+        .heart-bg:nth-child(2) { left: 15%; top: 60%; animation-duration: 12s; }
+        .heart-bg:nth-child(3) { left: 25%; top: 30%; animation-duration: 10s; }
+        .heart-bg:nth-child(4) { left: 45%; top: 80%; animation-duration: 14s; }
+        .heart-bg:nth-child(5) { left: 65%; top: 20%; animation-duration: 9s; }
+        .heart-bg:nth-child(6) { left: 75%; top: 70%; animation-duration: 11s; }
+        .heart-bg:nth-child(7) { left: 85%; top: 40%; animation-duration: 13s; }
+        .heart-bg:nth-child(8) { left: 95%; top: 90%; animation-duration: 15s; }
+        .heart-bg:nth-child(9) { left: 35%; top: 50%; animation-duration: 10s; }
+        .heart-bg:nth-child(10) { left: 55%; top: 15%; animation-duration: 12s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0.15; }
+            50% { transform: translateY(-15px) rotate(2deg); opacity: 0.25; }
+            100% { transform: translateY(0px) rotate(0deg); opacity: 0.15; }
+        }
+
+        /* MAIN CONTAINER */
+        .aesthetic-container {
+            position: relative;
+            z-index: 10;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* the main photo/video frame - BIGGER */
+        .memory-frame {
+            position: relative;
+            width: min(1300px, 95vw);
+            height: min(800px, 75vh);
+            background: #d9c5cb;
+            border: 15px solid white;
+            box-shadow: 0 25px 50px rgba(170, 80, 100, 0.4), 
+                        0 0 0 3px #e8d3da,
+                        inset 0 0 0 3px #f5e1e8;
+            margin-bottom: 2.5rem;
+            overflow: visible;  /* CHANGED: from hidden to visible */
+        }
+
+        /* the actual media container */
+        .media-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #d9c5cb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;  /* keeps media inside frame */
+        }
+
+        /* transition effects */
+        #displayMedia, #displayVideo {
+            transition: opacity 0.5s ease-in-out;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            filter: sepia(0.2) contrast(1.05) brightness(1.02);
+        }
+
+        /* vintage overlay effect */
+        .vintage-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, rgba(255, 230, 240, 0.15), rgba(210, 150, 170, 0.1));
+            pointer-events: none;
+            mix-blend-mode: multiply;
+            z-index: 5;
+        }
+
+        /* torn paper effect at corners */
+        .corner-decoration {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: 30px;
+            height: 30px;
+            border-top: 3px solid #f8e0e8;
+            border-left: 3px solid #f8e0e8;
+            z-index: 6;
+        }
+
+        .corner-decoration.bottom-right {
+            top: auto;
+            left: auto;
+            bottom: -5px;
+            right: -5px;
+            border-top: none;
+            border-left: none;
+            border-bottom: 3px solid #f8e0e8;
+            border-right: 3px solid #f8e0e8;
+        }
+
+        /* ===== TEXT OVERLAYS - NOW VISIBLE INSIDE FRAME ===== */
+        
+        /* top left - "this is my favorite boy" */
+        .text-overlay-top {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-family: 'Caveat', cursive;
+            font-size: 2.2rem;
+            color: #ffffff;
+            background: rgba(160, 90, 110, 0.8);
+            padding: 0.3rem 1.8rem;
+            border-radius: 40px;
+            transform: rotate(-1deg);
+            backdrop-filter: blur(3px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            z-index: 30;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* top right - "te adoro mi bebé." */
+        .top-love {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-family: 'Caveat', cursive;
+            font-size: 2.5rem;
+            color: #ffffff;
+            background: rgba(150, 80, 100, 0.8);
+            padding: 0.3rem 2rem;
+            border-radius: 50px;
+            transform: rotate(1deg);
+            backdrop-filter: blur(3px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            z-index: 30;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            white-space: nowrap;
+        }
+
+        /* bottom left - "S.M. Mary 10th" */
+        .left-signature {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #ffffff;
+            background: rgba(140, 80, 100, 0.8);
+            padding: 0.3rem 1.8rem;
+            border-radius: 40px;
+            backdrop-filter: blur(3px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            z-index: 30;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            white-space: nowrap;
+        }
+
+        /* bottom right - "永远的爱❤️" */
+        .right-signature {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            font-family: 'Caveat', cursive;
+            font-size: 2.2rem;
+            color: #ffffff;
+            background: rgba(160, 90, 110, 0.8);
+            padding: 0.3rem 2rem;
+            border-radius: 50px;
+            backdrop-filter: blur(3px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            z-index: 30;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            white-space: nowrap;
+        }
+
+        /* center bottom - "wedding on social media" */
+        .text-overlay-bottom {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #ffffff;
+            background: rgba(120, 70, 85, 0.7);
+            padding: 0.3rem 2rem;
+            border-radius: 40px;
+            backdrop-filter: blur(3px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            font-style: italic;
+            z-index: 30;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            white-space: nowrap;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        /* HIDE old positioned text */
+        .bottom-quote, .bottom-left-text {
+            display: none;
+        }
+
+        /* progress indicator - subtle */
+        .memory-counter {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: #ffffff;
+            background: rgba(100, 60, 70, 0.6);
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.4);
+            z-index: 40;
+            backdrop-filter: blur(2px);
+        }
+
+        /* transition flash effect */
+        .media-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0);
+            pointer-events: none;
+            transition: background 0.3s ease;
+            z-index: 10;
+        }
+
+        .media-container.transitioning::after {
+            background: rgba(255, 245, 250, 0.3);
+        }
+        /* Next button */
+        .next-button {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            z-index: 50;
+        }
+
+        .next-btn {
+            background: rgba(255, 240, 250, 0.9);
+            backdrop-filter: blur(5px);
+            border: 3px solid white;
+            color: #a53f5e;
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            font-weight: 600;
+            padding: 0.8rem 2.5rem;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #d46b86, 0 10px 20px rgba(170, 80, 100, 0.3);
+            transition: all 0.2s ease;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 0 #d46b86, 0 15px 25px rgba(170, 80, 100, 0.4);
+        }
+
+        .next-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 3px 0 #d46b86, 0 10px 20px rgba(170, 80, 100, 0.3);
+        }
+
+        .next-btn i {
+            font-size: 2rem;
+            transition: transform 0.3s;
+        }
+
+        .next-btn:hover i {
+            transform: translateX(5px);
+        }
+
+        /* also add a skip text */
+        .skip-text {
+            position: absolute;
+            bottom: 100px;
+            right: 40px;
+            font-size: 1.2rem;
+            color: #aa6b82;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            border: 1px solid white;
+            z-index: 45;
+            opacity: 0.7;
+            font-family: 'Caveat', cursive;
+        }
+
+        /* responsive adjustments */
+        @media (max-width: 1000px) {
+            .text-overlay-top { font-size: 1.8rem; top: 15px; left: 15px; }
+            .top-love { font-size: 2rem; top: 15px; right: 15px; }
+            .left-signature { font-size: 1.5rem; bottom: 20px; left: 15px; }
+            .right-signature { font-size: 1.6rem; bottom: 20px; right: 15px; }
+            .text-overlay-bottom { font-size: 1.4rem; bottom: 70px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- subtle floating hearts -->
+    <div class="floating-bg">
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+    </div>
+    <div class="next-button">
+    <button class="next-btn" id="nextToThankYou">
+        next <i class="fas fa-arrow-right"></i>
+    </button>
+    </div>
+    <div class="aesthetic-container">
+        <!-- memory counter (subtle) -->
+        <div class="memory-counter" id="memoryCounter">1 / 25</div>
+        <!-- main frame - exactly like your image style -->
+        <div class="memory-frame">
+            <!-- all the text overlays exactly as in your image -->
+            <div class="text-overlay-top">"this is my favorite boy"</div>
+            <div class="right-signature">❤️永远的❤️</div>
+            <div class="bottom-quote">te adoro mi bebé.</div>
+
+            <!-- the actual media container -->
+            <div class="media-container">
+                <img id="displayMedia" src="" alt="memory" style="display: none; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; opacity: 1; transition: opacity 0.5s ease-in-out;">
+                <video id="displayVideo" src="" muted loop playsinline style="display: none; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;"></video>
+                <div class="vintage-overlay"></div>
+                <div class="corner-decoration"></div>
+                <div class="corner-decoration bottom-right"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const imgElement = document.getElementById('displayMedia');
+            const videoElement = document.getElementById('displayVideo');
+            const counterElement = document.getElementById('memoryCounter');
+            
+            let memories = [];
+            let currentIndex = 0;
+
+            // Load memories from JSON
+            fetch('memories.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to load memories.json');
+                    return response.json();
+                })
+                .then(data => {
+                    memories = data;
+                    if (memories.length > 0) {
+                        updateCounter();
+                        showMedia(0);
+                        startSlideshow();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+            function showMedia(index) {
+            if (memories.length === 0) return;
+            
+            currentIndex = index;
+            const item = memories[currentIndex];
+            
+            // Add transition class for flash effect
+            const container = document.querySelector('.media-container');
+            container.classList.add('transitioning');
+            
+            // Fade out current media
+            if (imgElement.style.display !== 'none') {
+                imgElement.style.opacity = '0';
+            }
+            if (videoElement.style.display !== 'none') {
+                videoElement.style.opacity = '0';
+            }
+            
+            // Wait a bit, then change the source
+            setTimeout(() => {
+                // Hide both elements first
+                imgElement.style.display = 'none';
+                videoElement.style.display = 'none';
+                
+                if (item.type === 'image') {
+                    imgElement.src = item.src;
+                    imgElement.style.display = 'block';
+                    setTimeout(() => {
+                        imgElement.style.opacity = '1';
+                    }, 50);
+                } else {
+                    videoElement.src = item.src;
+                    videoElement.style.display = 'block';
+                    videoElement.play().catch(e => console.log('Video play failed:', e));
+                    setTimeout(() => {
+                        videoElement.style.opacity = '1';
+                    }, 50);
+                }
+                
+                // Remove transition class
+                setTimeout(() => {
+                    container.classList.remove('transitioning');
+                }, 300);
+                
+                updateCounter();
+            }, 250); // half of 0.5s
+        }
+
+            function nextMedia() {
+                // Fade out current video if playing
+                if (videoElement.style.display !== 'none') {
+                    videoElement.style.opacity = '0';
+                    setTimeout(() => {
+                        videoElement.pause();
+                    }, 250);
+                }
+                if (imgElement.style.display !== 'none') {
+                    imgElement.style.opacity = '0';
+                }
+                
+                const nextIndex = (currentIndex + 1) % memories.length;
+                
+                // Small delay before showing next
+                setTimeout(() => {
+                    showMedia(nextIndex);
+                }, 250);
+            }
+
+            function startSlideshow() {
+                // Clear any existing interval
+                if (window.slideshowInterval) {
+                    clearInterval(window.slideshowInterval);
+                }
+                // Check the type of the CURRENT media
+                if (memories[currentIndex] && memories[currentIndex].type === "image") {
+                    // Images change every 0.5 seconds
+                    window.slideshowInterval = setInterval(nextMedia, 500);
+                } else {
+                    // Videos change every 5 seconds
+                    window.slideshowInterval = setInterval(nextMedia, 5000);
+                }
+            }
+
+            function updateCounter() {
+                counterElement.textContent = `${currentIndex + 1} / ${memories.length}`;
+            }
+
+            function nextMedia() {
+                // Stop current video if playing
+                if (videoElement.style.display !== 'none') {
+                    videoElement.pause();
+                }
+                
+                const nextIndex = (currentIndex + 1) % memories.length;
+                showMedia(nextIndex);
+            }
+            // Next button functionality
+            const nextButton = document.getElementById('nextToThankYou');
+            if (nextButton) {
+                nextButton.addEventListener('click', function() {
+                    // Clear any intervals
+                    if (window.slideshowInterval) {
+                        clearInterval(window.slideshowInterval);
+                    }
+                    // Stop any playing video
+                    if (videoElement && videoElement.style.display !== 'none') {
+                        videoElement.pause();
+                    }
+                    // Redirect to thank you page
+                    window.location.href = 'thank-you.html';
+                });
+            }
+
+            // Optional: Auto-redirect after all memories play once
+            let hasRedirected = false;
+            const originalNextMedia = nextMedia;
+            nextMedia = function() {
+                originalNextMedia();
+                
+                // If we've gone through all memories and not redirected yet
+                if (currentIndex === 0 && !hasRedirected) {
+                    hasRedirected = true;
+                    setTimeout(() => {
+                        window.location.href = 'thank-you.html';
+                    }, 3000); // Wait 3 seconds after last memory
+                }
+            };
+            // Pause videos when not visible
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    if (videoElement.style.display !== 'none') {
+                        videoElement.pause();
+                    }
+                } else {
+                    if (videoElement.style.display !== 'none') {
+                        videoElement.play().catch(e => console.log('Play failed:', e));
+                    }
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

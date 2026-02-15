@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>thank you · 17 months baby 💞</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #fef0f5;
+            font-family: 'Caveat', cursive;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* floating hearts background */
+        .floating-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .heart-bg {
+            position: absolute;
+            font-size: 1.8rem;
+            opacity: 0.15;
+            animation: float 10s infinite ease-in-out;
+            color: #d46b86;
+        }
+
+        .heart-bg:nth-child(1) { left: 5%; top: 10%; animation-duration: 8s; }
+        .heart-bg:nth-child(2) { left: 15%; top: 60%; animation-duration: 12s; }
+        .heart-bg:nth-child(3) { left: 25%; top: 30%; animation-duration: 10s; }
+        .heart-bg:nth-child(4) { left: 45%; top: 80%; animation-duration: 14s; }
+        .heart-bg:nth-child(5) { left: 65%; top: 20%; animation-duration: 9s; }
+        .heart-bg:nth-child(6) { left: 75%; top: 70%; animation-duration: 11s; }
+        .heart-bg:nth-child(7) { left: 85%; top: 40%; animation-duration: 13s; }
+        .heart-bg:nth-child(8) { left: 95%; top: 90%; animation-duration: 15s; }
+        .heart-bg:nth-child(9) { left: 35%; top: 50%; animation-duration: 10s; }
+        .heart-bg:nth-child(10) { left: 55%; top: 15%; animation-duration: 12s; }
+        .heart-bg:nth-child(11) { left: 20%; top: 85%; animation-duration: 11s; }
+        .heart-bg:nth-child(12) { left: 80%; top: 25%; animation-duration: 9s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0.15; }
+            50% { transform: translateY(-15px) rotate(2deg); opacity: 0.25; }
+            100% { transform: translateY(0px) rotate(0deg); opacity: 0.15; }
+        }
+
+        /* main container */
+        .thankyou-container {
+            position: relative;
+            z-index: 10;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* main frame - same aesthetic as memories page */
+        .memory-frame {
+            position: relative;
+            width: min(1300px, 95vw);
+            height: min(800px, 75vh);
+            background: #d9c5cb;
+            border: 15px solid white;
+            box-shadow: 0 25px 50px rgba(170, 80, 100, 0.4), 
+                        0 0 0 3px #e8d3da,
+                        inset 0 0 0 3px #f5e1e8;
+            overflow: visible;
+            display: flex;
+            flex-direction: row;  /* side by side layout */
+        }
+
+        /* left side - image/video */
+        .media-section {
+            width: 45%;
+            height: 100%;
+            position: relative;
+            background: #d9c5cb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 3px dashed rgba(255, 255, 255, 0.5);
+            padding: 20px;
+        }
+
+        #lastMedia {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            filter: sepia(0.2) contrast(1.05) brightness(1.02);
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border: 5px solid white;
+        }
+
+        /* right side - love letter */
+        .letter-section {
+            width: 55%;
+            height: 100%;
+            padding: 40px 30px;
+            overflow-y: auto;
+            background: rgba(255, 240, 250, 0.7);
+            backdrop-filter: blur(5px);
+            position: relative;
+        }
+
+        /* custom scrollbar */
+        .letter-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .letter-section::-webkit-scrollbar-track {
+            background: #f5d9e5;
+            border-radius: 10px;
+        }
+
+        .letter-section::-webkit-scrollbar-thumb {
+            background: #d46b86;
+            border-radius: 10px;
+            border: 2px solid white;
+        }
+
+        .love-letter {
+            font-family: 'Caveat', cursive;
+            color: #4a2a36;
+            font-size: 1.6rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .greeting {
+            font-size: 2.5rem;
+            color: #b14167;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+            text-shadow: 2px 2px 0 #ffe2eb;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 60px;
+            border: 2px solid white;
+        }
+
+        .message {
+            margin: 20px 0;
+            padding: 0 10px;
+        }
+
+        .highlight {
+            color: #d43f6b;
+            font-weight: 600;
+            font-size: 1.8rem;
+        }
+
+        .signature {
+            text-align: right;
+            font-size: 2.2rem;
+            color: #a53f5e;
+            margin-top: 30px;
+            border-top: 2px dashed #ffb0c3;
+            padding-top: 20px;
+            font-weight: 600;
+        }
+
+        .heart-emoji {
+            font-size: 2rem;
+            animation: pulse 1.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .month-badge {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffd0dd;
+            color: #a53f5e;
+            font-size: 2rem;
+            padding: 0.3rem 3rem;
+            border-radius: 60px;
+            border: 4px solid white;
+            box-shadow: 0 6px 0 #e1a7bb;
+            z-index: 30;
+            white-space: nowrap;
+            font-weight: 700;
+        }
+
+        /* corner decorations */
+        .corner-decoration {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: 30px;
+            height: 30px;
+            border-top: 3px solid #f8e0e8;
+            border-left: 3px solid #f8e0e8;
+            z-index: 6;
+        }
+
+        .corner-decoration.bottom-right {
+            top: auto;
+            left: auto;
+            bottom: -5px;
+            right: -5px;
+            border-top: none;
+            border-left: none;
+            border-bottom: 3px solid #f8e0e8;
+            border-right: 3px solid #f8e0e8;
+        }
+
+        .vintage-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, rgba(255, 230, 240, 0.15), rgba(210, 150, 170, 0.1));
+            pointer-events: none;
+            mix-blend-mode: multiply;
+            z-index: 5;
+        }
+
+        /* responsive */
+        @media (max-width: 900px) {
+            .memory-frame {
+                flex-direction: column;
+                height: min(1000px, 90vh);
+            }
+            .media-section, .letter-section {
+                width: 100%;
+            }
+            .media-section {
+                height: 40%;
+                border-right: none;
+                border-bottom: 3px dashed rgba(255, 255, 255, 0.5);
+            }
+            .letter-section {
+                height: 60%;
+            }
+            .love-letter {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .love-letter {
+                font-size: 1.1rem;
+            }
+            .greeting {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- floating hearts -->
+    <div class="floating-bg">
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+        <div class="heart-bg">❤️</div>
+    </div>
+
+    <div class="thankyou-container">
+        <!-- month badge -->
+        <div class="month-badge">💕 Happy 17 Months Baby 💕</div>
+
+        <!-- main frame -->
+        <div class="memory-frame">
+            <!-- left side - your image/video -->
+            <div class="media-section">
+                <video id="lastMedia" src="memories/last video.mp4" alt="our last memory" onerror="this.src='https://via.placeholder.com/400x600?text=Our+Last+Memory'">
+                <div class="vintage-overlay"></div>
+            </div>
+
+            <!-- right side - love letter -->
+            <div class="letter-section">
+                <div class="love-letter">
+                    <div class="greeting">Helllooo babyyy,</div>
+                    
+                    <div class="message">
+                        Can you believe it's been <span class="highlight">1 year 5 monthsss...</span> mtlb itna jhel kese liya apne meko... 
+                        I am sorryy ki me itna pareshan krti hun apko har time ladti hun overacting krti hun... because all i want is your attention baby... the way you care for me har choti choti cheez ka dhyan rakhna I swear no man could do the same for me....
+                        and aap itna darte ho hamesha bolte ki aap deserve nhi krte yeh sb...aisa nhi hai babyy you are the bestest thing that ever happened to me...mtlb me na imagine bhi nhi kr skti ki aap nhi hote toh mera kya hota yahan... you deserve the best babyyy and remember <span class="highlight">I LOVE YOUU SOOO SOOO MUCHH..</span>
+                        isliye kabhi bhi apne ko neecha mat dikhao baby mujhe boht dukh hota h ki aap aisa apne aap ko dekhte ho... agar mere taraf se dekho toh iss smit me nobody could be a better man than you...isliye thank you for everything and also sorry for all the things
+                        And I may disappoint you mere planning se but I'll try my best okay..<span class="heart-emoji">🥹</span>
+                    </div>
+                    
+                    <div class="signature">
+                        I love you the most <span class="heart-emoji">💞💖</span>
+                    </div>
+                </div>
+                <div class="vintage-overlay"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Optional: If it's a video, handle video playback
+        window.onload = function() {
+            const mediaElement = document.getElementById('lastMedia');
+            const mediaSrc = 'memories/last video.jpg'; // change to .mp4 if it's a video
+            
+            // Check if it's a video file (by extension)
+            if (mediaSrc.toLowerCase().endsWith('.mp4') || mediaSrc.toLowerCase().endsWith('.mov')) {
+                // Change img to video if needed
+                const video = document.createElement('video');
+                video.id = 'lastMedia';
+                video.src = mediaSrc;
+                video.autoplay = true;
+                video.loop = true;
+                video.muted = true;
+                video.playsInline = true;
+                video.style.maxWidth = '100%';
+                video.style.maxHeight = '100%';
+                video.style.objectFit = 'contain';
+                
+                // Replace img with video
+                mediaElement.parentNode.replaceChild(video, mediaElement);
+            }
+        };
+    </script>
+</body>
+</html>
